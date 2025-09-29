@@ -4,6 +4,10 @@
 #include "../include/map.h"
 #include "../include/constants.h"
 
+void updateMap(Map *map, int oldPlayerPosX, int oldPlayerPosY, int newplayerPosX, int newplayerPosY) {
+    map->mapGrid[oldPlayerPosX][oldPlayerPosY] = ' ';
+    map->mapGrid[newplayerPosX][newplayerPosY] = 'P'; 
+}
 
 void movePlayer(Map *map, int *playerPosX, int *playerPosY, char direction) {
     int newplayerPosX = *playerPosX;
@@ -34,9 +38,7 @@ void movePlayer(Map *map, int *playerPosX, int *playerPosY, char direction) {
             /* target position is free, move player */
             printf("Player moves to (%d, %d)\n", newplayerPosX, newplayerPosY);
             printf("Old Player pos is now ' '(%d, %d)\n", *playerPosX, *playerPosY);
-            map->mapGrid[*playerPosX][*playerPosY] = ' '; 
-            map->mapGrid[newplayerPosX][newplayerPosY] = 'P';
-
+            updateMap(map, *playerPosX, *playerPosY, newplayerPosX, newplayerPosY);
             *playerPosX = newplayerPosX;
             *playerPosY = newplayerPosY;
         } else {
