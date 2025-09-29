@@ -54,13 +54,13 @@ int loadMap(Game *game, const char *filename) {
     } else if(!allocateMap(&game->map, rows, cols)) {        /* Address of map to function. If map allocating fails, close file and return failure */
         fclose(file);
         result = FAILURE;
-        printf("fail 3: Allocating map failed.\n");
+        printf("fail 3: Allocating map failed. res= %d\n", result);
     } else {
         for (i = 0; i < rows && result == SUCCESS ; i++) {
             for (j = 0; j < cols && result == SUCCESS ; j++) {
                 if (fscanf(file, "%d", &fileValue) != 1) {      /* Tries to read one by one integer from the file */
                     result = FAILURE;     /* If the file format is incorrect (!=1) will return false */
-                    printf("fail 4: Invalid map file format detected.\n");
+                    printf("fail 4: Invalid map file format detected. res= %d\n", result);
                 }
                 game->map.mapGrid[i][j] = numToSymbol(fileValue);      /* If reading was successfull, the value will be transformed into a symbol and saved into 2d array cells*/
             

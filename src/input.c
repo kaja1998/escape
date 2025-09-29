@@ -11,11 +11,12 @@ void disableRawMode() {
 }
 
 void enableRawMode() {
-  tcgetattr(STDIN_FILENO, &orig_termios);
-  atexit(disableRawMode);
-  struct termios raw = orig_termios;
-  raw.c_lflag &= ~(ECHO | ICANON);
-  tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
+    struct termios raw;
+    tcgetattr(STDIN_FILENO, &orig_termios);
+    atexit(disableRawMode);
+    raw = orig_termios;
+    raw.c_lflag &= ~(ECHO | ICANON);
+    tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
 }
 
 char getInput(){

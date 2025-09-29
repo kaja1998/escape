@@ -15,8 +15,6 @@ typedef struct {
 typedef struct {
     Map map;
     Player player; 
-    /*Water *waters;
-    Trap *traps; */
 } Game;
 
 void gameLoop(Game *game);

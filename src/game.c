@@ -23,14 +23,11 @@ void gameLoop(Game *game) {
             case 'a':  /* left */
             case 's':  /* down */
             case 'd':  /* right */
-                movePlayer(&game->map, game->player.PlayerPosX, game->player.playerPosY, input);
-                triggerTrap(&game->map);
-                floodWater(&game->map);
+                /* movePlayer(&game->map, game->player.PlayerPosX, game->player.playerPosY, input); */
                 break;
 
             case 'u': /* undo */
                 printf("Undoing last move.\n");
-                undoLastMove(&game->map);
                 continue;
 
             case 'q': /* Quit */
@@ -41,15 +38,6 @@ void gameLoop(Game *game) {
             default: /* invalid input */
                 printf("Invalid input. Please try again.\n");
                 continue;
-        }
-
-        if (checkForWin(&game->map)) { 
-            printf("Congratulations, You Win!\n");
-            break;
-        }
-        if (checkForLoss(&game->map)) {
-            printf("Sorry, You Lost!\n");
-            break;
         }
     }
     disableRawMode();
