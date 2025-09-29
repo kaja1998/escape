@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "../include/game.h"
 #include "../include/map.h"
 #include "../include/input.h"
