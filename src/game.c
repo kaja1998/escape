@@ -14,16 +14,19 @@ void gameLoop(Game *game) {
 
     /* Start game-loop */
     while (result == SUCCESS) {
+        clearScreen();
         printMap(&game->map);
         printf("Enter move (w/a/s/d to move, u to undo, q to quit): \n");
         input = getInput();
+        printf("%c\n", input);
 
         switch (input) {
             case 'w':  /* up */
             case 'a':  /* left */
             case 's':  /* down */
             case 'd':  /* right */
-                /* movePlayer(&game->map, game->player.PlayerPosX, game->player.playerPosY, input); */
+                printf("PlayerPosition: %d %d \n", game->player.PlayerPosX, game->player.playerPosY);
+                movePlayer(&game->map, &game->player.PlayerPosX, &game->player.playerPosY, input);
                 break;
 
             case 'u': /* undo */
@@ -41,4 +44,12 @@ void gameLoop(Game *game) {
         }
     }
     disableRawMode();
+}
+
+void clearScreen() {
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
 }

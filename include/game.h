@@ -18,5 +18,6 @@ typedef struct {
 } Game;
 
 void gameLoop(Game *game);
+void clearScreen();
 
 #endif

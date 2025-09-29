@@ -1,8 +1,8 @@
 CC = gcc
 CFLAGS = -Wall -std=c89 -pedantic -g -Iinclude
 TARGET = escape
-SRCS = src/main.c src/map.c src/game.c src/input.c
-OBJS = src/main.o src/map.o src/game.o src/input.o
+SRCS = src/main.c src/map.c src/game.c src/movement.c src/input.c
+OBJS = src/main.o src/map.o src/game.o src/movement.o src/input.o
 
 all: $(TARGET)
 
@@ -19,6 +19,9 @@ map.o: src/map.c src/map.h
 
 game.o: src/game.c src/game.h
 	$(CC) $(CFLAGS) -c src/game.c -o src/game.o
+
+movement.o: src/movement.c src/movement.h
+	$(CC) $(CFLAGS) -c src/movement.c -o src/movement.o
 
 input.o: src/input.c src/input.h
 	$(CC) $(CFLAGS) -c src/input.c -o src/input.o
