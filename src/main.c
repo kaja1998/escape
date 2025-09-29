@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
         mapResult = FAILURE;
     } 
     
-    mapResult = loadMap(game, argv[1]);
+    mapResult = loadMap(&game->map, argv[1]);
     
     if (mapResult == FAILURE) {
         printf("Error loading map file.\n");  

@@ -5,38 +5,42 @@
 #include "../include/constants.h"
 
 
-void movePlayer(Map *map, int playerPosX, int playerPosY, char direction) {
-    int newplayerPosX = playerPosX;
-    int newplayerPosY = playerPosY;
-    char targetCell;
+void movePlayer(Map *map, int *playerPosX, int *playerPosY, char direction) {
+    int newplayerPosX = *playerPosX;
+    int newplayerPosY = *playerPosY;
+    char targetPos;
 
-    /* Berechne neue Position basierend auf der Richtung */
+    /* Calulate new Player position based on direction */
     switch (direction) {
-        case 'w':  /* nach oben */
+        case 'w':  /* up */
             newplayerPosX--;
             break;
-        case 'a':  /* nach links */
+        case 'a':  /* left */
             newplayerPosY--;
             break;
-        case 's':  /* nach unten */
+        case 's':  /* down */
             newplayerPosX++;
             break;
-        case 'd':  /* nach rechts */
+        case 'd':  /* right */
             newplayerPosY++;
             break;
     }
 
-    /* Prüfe, ob das neue Feld innerhalb der Karten-Größen liegt */
+    /* check if new Position is a pos on map */
     if (newplayerPosX >= 0 && newplayerPosX < map->rows && newplayerPosY >= 0 && newplayerPosY < map->cols) {
-        /* Jetzt prüfen, ob das Ziel-Feld frei ist */
-        targetCell = map->mapGrid[newplayerPosX][newplayerPosY];
-        if (targetCell == ' ' || targetCell == 'W' || targetCell == 'T') {
-            /* Ziel ist frei, also bewege den Spieler */
+        /* target-position free? */
+        targetPos = map->mapGrid[newplayerPosX][newplayerPosY];
+        if (targetPos == ' ' || targetPos == '~' || targetPos == 'G' || targetPos == '@') {
+            /* target position is free, move player */
             printf("Player moves to (%d, %d)\n", newplayerPosX, newplayerPosY);
-            map->mapGrid[playerPosX][playerPosY] = ' '; 
+            printf("Old Player pos is now ' '(%d, %d)\n", *playerPosX, *playerPosY);
+            map->mapGrid[*playerPosX][*playerPosY] = ' '; 
             map->mapGrid[newplayerPosX][newplayerPosY] = 'P';
+
+            *playerPosX = newplayerPosX;
+            *playerPosY = newplayerPosY;
         } else {
-            printf("Cannot move there. It's blocked by %c\n", targetCell);
+            printf("Cannot move there. It's blocked by %c\n", targetPos);
         }
     } else {
         printf("Move out of bounds!\n");
