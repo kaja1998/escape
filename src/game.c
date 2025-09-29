@@ -14,7 +14,7 @@ void gameLoop(Game *game) {
 
     /* Start game-loop */
     while (result == SUCCESS) {
-        //clearScreen();
+        /* clearScreen(); */
         printMap(&game->map);
         printf("Enter move (w/a/s/d to move, u to undo, q to quit): \n");
         input = getInput();
