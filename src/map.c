@@ -65,7 +65,7 @@ int loadMap(Game *game, const char *filename) {
                 game->map.mapGrid[i][j] = numToSymbol(fileValue);      /* If reading was successfull, the value will be transformed into a symbol and saved into 2d array cells*/
             
                 if (game->map.mapGrid[i][j] == 'P') {       /* get player Position */
-                    game->player.PlayerPosX = i;  
+                    game->player.playerPosX = i;  
                     game->player.playerPosY = j; 
                 }
             }
