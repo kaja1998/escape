@@ -1,1 +1,6 @@
+# Ignore VS Code files
 /.vscode
+
+# Ignore object and executable files
+*.o
+*.exe
