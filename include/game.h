@@ -1,18 +1,10 @@
 #ifndef GAME_H
 #define GAME_H
 
-typedef struct {
-    int rows;
-    int cols;
-    char **mapGrid;       /* 2D array of the map */
-}Map;
+#include "player.h"
+#include "map.h"
 
-typedef struct {
-    int PlayerPosX;
-    int playerPosY;
-}Player;
-
-typedef struct {
+typedef struct Game {
     Map map;
     Player player; 
 } Game;

@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../include/game.h"
-#include "../include/map.h"
 #include "../include/input.h"
 #include "../include/movement.h"
 #include "../include/constants.h"
@@ -15,7 +14,7 @@ void gameLoop(Game *game) {
 
     /* Start game-loop */
     while (result == SUCCESS) {
-        /* clearScreen(); */
+        //clearScreen();
         printMap(&game->map);
         printf("Enter move (w/a/s/d to move, u to undo, q to quit): \n");
         input = getInput();
@@ -26,8 +25,8 @@ void gameLoop(Game *game) {
             case 'a':  /* left */
             case 's':  /* down */
             case 'd':  /* right */
-                printf("PlayerPosition: %d %d \n", game->player.PlayerPosX, game->player.playerPosY);
-                movePlayer(&game->map, &game->player.PlayerPosX, &game->player.playerPosY, input);
+                printf("PlayerPosition: %d %d \n", game->player.playerPosX, game->player.playerPosY);
+                movePlayer(&game->map, &game->player.playerPosX, &game->player.playerPosY, input);
                 break;
 
             case 'u': /* undo */
