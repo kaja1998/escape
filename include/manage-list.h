@@ -6,12 +6,9 @@
 #include "node.h"
 
 Node* createNode(Game *game);
-void insertAtBeginning(Node** head, Game *game);
 void insertAtEnd(Node **head, Game *game);
 void deleteAtEnd(Node** head);
 Node* getAtEnd(Node* head);
-void printListForward(Node* head);
-void printListReverse(Node* head);
 Game* copyGame(Game* original);
 
 #endif
