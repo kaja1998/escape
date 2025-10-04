@@ -1,10 +1,6 @@
 #ifndef WATER_H
 #define WATER_H
 
-typedef struct {
-    int x;
-    int y;
-    int **waterGrid;
-} Water;
+void floodWater(Map *map);
 
 #endif

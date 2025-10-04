@@ -1,8 +1,8 @@
 CC = gcc
 CFLAGS = -Wall -std=c89 -pedantic -g -Iinclude
 TARGET = escape
-SRCS = src/main.c src/map.c src/game.c src/movement.c src/input.c src/manage-list.c
-OBJS = src/main.o src/map.o src/game.o src/movement.o src/input.o src/manage-list.o
+SRCS = src/main.c src/map.c src/game.c src/movement.c src/water.c src/input.c src/manage-list.c
+OBJS = src/main.o src/map.o src/game.o src/movement.o src/water.o src/input.o src/manage-list.o
 
 all: $(TARGET)
 
@@ -22,6 +22,9 @@ game.o: src/game.c src/game.h
 
 movement.o: src/movement.c src/movement.h
 	$(CC) $(CFLAGS) -c src/movement.c -o src/movement.o
+
+water.o: src/water.c src/water.h
+	$(CC) $(CFLAGS) -c src/water.c -o src/water.o
 
 input.o: src/input.c src/input.h
 	$(CC) $(CFLAGS) -c src/input.c -o src/input.o

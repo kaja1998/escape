@@ -66,7 +66,7 @@ void movePlayer(Map *map, int *playerPosX, int *playerPosY, char direction) {
             updatePlayerPosition(playerPosX, playerPosY, newplayerPosX, newplayerPosY);     /* pass pointer */
 
             if (trapTriggered) {
-                /* func floodWater() */
+                floodWater(map);
             }
         } else {
             printf("Cannot move there. It's blocked by %c\n", targetPos);
