@@ -23,7 +23,7 @@ void gameLoop(Game *game) {
 
         if (currentStatus == NULL) {
             printf("No more moves to undo.\n");
-            break;  // or continue; depending on desired behavior
+            break;  /* or continue; depending on desired behavior */
         }
 
         printMap(&currentStatus->game->map);
