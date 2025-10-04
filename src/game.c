@@ -4,18 +4,24 @@
 #include "../include/input.h"
 #include "../include/movement.h"
 #include "../include/constants.h"
+#include "../include/node.h"
+#include "../include/manage-list.h"
 
 
 void gameLoop(Game *game) {
+    Node* head = NULL;
     int result = SUCCESS;
     char input;
+
+    insertAtEnd(&head, &game->player, &game->map); 
 
     enableRawMode();
 
     /* Start game-loop */
     while (result == SUCCESS) {
         /* clearScreen(); */
-        printMap(&game->map);
+        Node* currentStatus = getAtEnd(head);
+        printMap(currentStatus->map);
         printf("Enter move (w/a/s/d to move, u to undo, q to quit): \n");
         input = getInput();
         printf("%c\n", input);
@@ -27,11 +33,13 @@ void gameLoop(Game *game) {
             case 'd':  /* right */
                 printf("PlayerPosition: %d %d \n", game->player.playerPosX, game->player.playerPosY);
                 movePlayer(&game->map, &game->player.playerPosX, &game->player.playerPosY, input);
+                printf("Move planer returned \n");
+                insertAtEnd(&head, &game->player, &game->map);
                 break;
-
             case 'u': /* undo */
                 printf("Undoing last move.\n");
-                continue;
+                deleteAtEnd(head);
+                break;
 
             case 'q': /* Quit */
                 printf("Exiting game.\n");
