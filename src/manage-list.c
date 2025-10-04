@@ -24,21 +24,6 @@ Node* createNode(Game *game) {
     return newNode;
 }
 
-/* Function to insert a node at the beginning */
-void insertAtBeginning(Node** head, Game *game) {
-    /* creating new node */
-    Node* newNode = createNode(game);
-
-    /* check if DLL is empty */
-    if (*head == NULL) {
-        *head = newNode;
-        return;
-    }
-    newNode->next = *head;
-    (*head)->prev = newNode;
-    *head = newNode;
-}
-
 /* Function to insert a node at the end */
 void insertAtEnd(Node **head, Game *game) {
     Node *newNode = createNode(game);
@@ -92,35 +77,6 @@ Node* getAtEnd(Node* head) {
     }
 
     return temp;
-}
-
-/* Function to print the list in forward direction */
-void printListForward(Node* head) {
-    Node* temp = head;
-    printf("Forward List");
-    while (temp != NULL) {
-        temp = temp->next;
-    }
-    printf("\n");
-}
-
-/* Function to print the list in reverse direction */
-void printListReverse(Node* head) {
-    Node* temp = head;
-    if (temp == NULL) {
-        printf("The list is empty.\n");
-        return;
-    }
-    /* Move to the end of the list */
-    while (temp->next != NULL) {
-        temp = temp->next;
-    }
-    /* Traverse backwards */
-    printf("Reverse List");
-    while (temp != NULL) {
-        temp = temp->prev;
-    }
-    printf("\n");
 }
 
 Game* copyGame(Game* original) {
