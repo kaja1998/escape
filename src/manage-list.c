@@ -1,11 +1,9 @@
-#include "../include/player.h"
 #include "../include/node.h"
-#include "../include/map.h"
 #include <stdio.h>
 #include <stdlib.h>
 
 /* Function to create a new node with given value as data */
-Node* createNode(Player *player, Map *map) {
+Node* createNode(Game *game) {
     Node* newNode = (Node*)malloc(sizeof(Node));
     if (!newNode) {
         fprintf(stderr, "Memory allocation failed\n");
@@ -13,20 +11,12 @@ Node* createNode(Player *player, Map *map) {
     }
 
     // Allocate and copy Player
-    newNode->player = malloc(sizeof(Player));
-    if (!newNode->player) {
-        fprintf(stderr, "Memory allocation failed for player\n");
+    newNode->game = malloc(sizeof(Game));
+    if (!newNode->game) {
+        fprintf(stderr, "Memory allocation failed for game\n");
         exit(EXIT_FAILURE);
     }
-    *(newNode->player) = *player;  // copy struct contents
-
-    // Allocate and copy Map
-    newNode->map = malloc(sizeof(Map));
-    if (!newNode->map) {
-        fprintf(stderr, "Memory allocation failed for map\n");
-        exit(EXIT_FAILURE);
-    }
-    *(newNode->map) = *map;  // copy struct contents
+    *(newNode->game) = *game;  // copy struct contents
 
     newNode->next = NULL;
     newNode->prev = NULL;
@@ -34,9 +24,9 @@ Node* createNode(Player *player, Map *map) {
 }
 
 /* Function to insert a node at the beginning */
-void insertAtBeginning(Node** head, Player *player, Map *map) {
+void insertAtBeginning(Node** head, Game *game) {
     /* creating new node */
-    Node* newNode = createNode(player, map);
+    Node* newNode = createNode(game);
 
     /* check if DLL is empty */
     if (*head == NULL) {
@@ -49,8 +39,8 @@ void insertAtBeginning(Node** head, Player *player, Map *map) {
 }
 
 /* Function to insert a node at the end */
-void insertAtEnd(Node **head, Player *player, Map *map) {
-    Node *newNode = createNode(player, map);
+void insertAtEnd(Node **head, Game *game) {
+    Node *newNode = createNode(game);
 
     if (*head == NULL) {
         *head = newNode;  // empty list
@@ -64,61 +54,6 @@ void insertAtEnd(Node **head, Player *player, Map *map) {
 
     temp->next = newNode;
     newNode->prev = temp;
-}
-
-/* Function to insert a node at a specified position */
-void insertAtPosition(Node** head, Player *player, Map *map, int position) {
-    Node* newNode;
-    Node* temp;
-    int i;
-    
-    if (position < 1) {
-        printf("Position should be >= 1.\n");
-        return;
-    }
-
-    /* if we are inserting at head */
-    if (position == 1) {
-        insertAtBeginning(head, player, map);
-        return;
-    }
-    
-    newNode = createNode(player, map);
-    temp = *head;
-    for (i = 1; temp != NULL && i < position - 1; i++) {
-        temp = temp->next;
-    }
-    if (temp == NULL) {
-        printf(
-            "Position greater than the number of nodes.\n");
-        return;
-    }
-    
-    newNode->next = temp->next;
-    newNode->prev = temp;
-    if (temp->next != NULL) {
-        temp->next->prev = newNode;
-    }
-    temp->next = newNode;
-}
-
-/* Function to delete a node from the beginning */
-void deleteAtBeginning(Node** head) {
-    Node* temp;
-    
-    /* checking if the DLL is empty */
-    if (*head == NULL) {
-        printf("The list is already empty.\n");
-        return;
-    }
-
-    temp = *head;
-    *head = (*head)->next;
-    if (*head != NULL) {
-        (*head)->prev = NULL;
-    }
-
-    free(temp);
 }
 
 /* Function to delete a node from the end */
@@ -142,43 +77,6 @@ void deleteAtEnd(Node** head) {
     }
 
     temp->prev->next = NULL;
-    free(temp);
-}
-
-/* Function to delete a node from a specified position  */
-void deleteAtPosition(Node** head, int position) {
-    Node* temp;
-    int i;
-    
-    if (*head == NULL) {
-        printf("The list is already empty.\n");
-        return;
-    }
-
-    temp = *head;
-    if (position == 1) {
-        deleteAtBeginning(head);
-        return;
-    }
-
-    for (i = 1; temp != NULL && i < position; i++) {
-        temp = temp->next;
-    }
-
-    if (temp == NULL) {
-        printf("Position is greater than the number of "
-               "nodes.\n");
-        return;
-    }
-
-    if (temp->next != NULL) {
-        temp->next->prev = temp->prev;
-    }
-
-    if (temp->prev != NULL) {
-        temp->prev->next = temp->next;
-    }
-
     free(temp);
 }
 
