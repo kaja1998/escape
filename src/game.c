@@ -36,7 +36,12 @@ void gameLoop(Game *game) {
             case 'a':  /* left */
             case 's':  /* down */
             case 'd':  /* right */
-                movePlayer(&currentStatus->game->map, &currentStatus->game->player.playerPosX, &currentStatus->game->player.playerPosY, input);
+                movePlayer(&currentStatus->game->map,
+                        &currentStatus->game->player.playerPosX,
+                        &currentStatus->game->player.playerPosY,
+                        input);
+
+                game = currentStatus->game;
                 insertAtEnd(&head, copyGame(game));
                 break;
             case 'u': /* undo */
