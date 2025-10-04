@@ -19,7 +19,7 @@ void gameLoop(Game *game) {
 
     /* Start game-loop */
     while (result == SUCCESS) {
-        Node* currentStatus = getAtEnd(head);
+        Node *currentStatus = getAtEnd(head);
 
         if (currentStatus == NULL) {
             printf("No more moves to undo.\n");
@@ -36,8 +36,8 @@ void gameLoop(Game *game) {
             case 'a':  /* left */
             case 's':  /* down */
             case 'd':  /* right */
-                movePlayer(&game->map, &game->player.playerPosX, &game->player.playerPosY, input);
-                insertAtEnd(&head, game);
+                movePlayer(&currentStatus->game->map, &currentStatus->game->player.playerPosX, &currentStatus->game->player.playerPosY, input);
+                insertAtEnd(&head, copyGame(game));
                 break;
             case 'u': /* undo */
                 printf("Undoing last move.\n");

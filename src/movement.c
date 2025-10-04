@@ -53,6 +53,13 @@ void movePlayer(Map *map, int *playerPosX, int *playerPosY, char direction) {
     if (newplayerPosX >= 0 && newplayerPosX < map->rows && newplayerPosY >= 0 && newplayerPosY < map->cols) {
         /* target-position free? */
         targetPos = map->mapGrid[newplayerPosX][newplayerPosY];
+
+        printf("targetPos %c \n", targetPos);
+        printf("oldplayerPosX %d \n", *playerPosX);
+        printf("oldplayerPosY %d \n", *playerPosY);
+        printf("newplayerPosX %d \n", newplayerPosX);
+        printf("newplayerPosY %d \n", newplayerPosY);
+
         if (targetPos == ' ' || targetPos == '~' || targetPos == 'G' || targetPos == '@') {
 
             if (targetPos == '@') {

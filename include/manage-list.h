@@ -12,5 +12,6 @@ void deleteAtEnd(Node** head);
 Node* getAtEnd(Node* head);
 void printListForward(Node* head);
 void printListReverse(Node* head);
+Game* copyGame(Game* original);
 
 #endif
