@@ -11,13 +11,13 @@ Node* createNode(Game *game) {
         exit(EXIT_FAILURE);
     }
 
-    // Allocate and copy Player
+    /* Allocate and copy Player */
     newNode->game = malloc(sizeof(Game));
     if (!newNode->game) {
         fprintf(stderr, "Memory allocation failed for game\n");
         exit(EXIT_FAILURE);
     }
-    *(newNode->game) = *game;  // copy struct contents
+    *(newNode->game) = *game;  /* copy struct contents */
 
     newNode->next = NULL;
     newNode->prev = NULL;
@@ -42,13 +42,14 @@ void insertAtBeginning(Node** head, Game *game) {
 /* Function to insert a node at the end */
 void insertAtEnd(Node **head, Game *game) {
     Node *newNode = createNode(game);
+    Node *temp;
 
     if (*head == NULL) {
-        *head = newNode;  // empty list
+        *head = newNode;  /* empty list */
         return;
     }
 
-    Node *temp = *head;
+    temp = *head;
     while (temp->next != NULL) {
         temp = temp->next;
     }
@@ -59,20 +60,21 @@ void insertAtEnd(Node **head, Game *game) {
 
 /* Function to delete a node from the end */
 void deleteAtEnd(Node** head) {
+    Node* temp;
     if (*head == NULL) {
         printf("The list is already empty.\n");
         return;
     }
 
-    Node* temp = *head;
+    temp = *head;
 
-    // If only one node, keep it (optional)
+    /* If only one node, keep it (optional) */
     if (temp->next == NULL) {
         printf("Cannot undo the initial state.\n");
         return;
     }
 
-    // Traverse to the last node
+    /* Traverse to the last node */
     while (temp->next != NULL) {
         temp = temp->next;
     }
@@ -127,28 +129,29 @@ void printListReverse(Node* head) {
 }
 
 Game* copyGame(Game* original) {
+    int i;
     Game* newGame = malloc(sizeof(Game));
     if (!newGame) {
         perror("Failed to allocate memory for game copy");
         exit(EXIT_FAILURE);
     }
 
-    // Copy the player
+    /* Copy the player */
     newGame->player = original->player;
 
-    // Copy map dimensions
+    /* Copy map dimensions */
     newGame->map.rows = original->map.rows;
     newGame->map.cols = original->map.cols;
 
-    // Allocate memory for the new map grid
+    /* Allocate memory for the new map grid */
     newGame->map.mapGrid = malloc(original->map.rows * sizeof(char*));
     if (!newGame->map.mapGrid) {
         perror("Failed to allocate memory for mapGrid");
         exit(EXIT_FAILURE);
     }
 
-    // Deep copy each row
-    for (int i = 0; i < original->map.rows; i++) {
+    /* Deep copy each row */
+    for (i = 0; i < original->map.rows; i++) {
         newGame->map.mapGrid[i] = malloc(original->map.cols + 1);
         if (!newGame->map.mapGrid[i]) {
             perror("Failed to allocate memory for map row");
