@@ -13,7 +13,7 @@ void gameLoop(Game *game) {
     int result = SUCCESS;
     char input;
 
-    insertAtEnd(&head, &game->player, &game->map); 
+    insertAtEnd(&head, game); 
 
     enableRawMode();
 
@@ -26,7 +26,7 @@ void gameLoop(Game *game) {
             break;  // or continue; depending on desired behavior
         }
 
-        printMap(currentStatus->map);
+        printMap(&currentStatus->game->map);
         printf("Enter move (w/a/s/d to move, u to undo, q to quit): \n");
         input = getInput();
         printf("%c\n", input);
@@ -37,7 +37,7 @@ void gameLoop(Game *game) {
             case 's':  /* down */
             case 'd':  /* right */
                 movePlayer(&game->map, &game->player.playerPosX, &game->player.playerPosY, input);
-                insertAtEnd(&head, &game->player, &game->map);
+                insertAtEnd(&head, game);
                 break;
             case 'u': /* undo */
                 printf("Undoing last move.\n");
