@@ -91,11 +91,6 @@ Node* getAtEnd(Node* head) {
         temp = temp->next;
     }
 
-    /* Traverse backwards */
-    if (temp != NULL && temp->prev != NULL) {
-        temp = temp->prev;
-    }
-
     return temp;
 }
 
