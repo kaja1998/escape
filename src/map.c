@@ -95,7 +95,9 @@ void printMap(Map *map) {
             }
             else if (c == 'G'){
                 printf("\033[42m%c\033[0m", c);     /* Background green */
-            } else {
+            }     else if (c == '~') {
+            printf("\033[44m%c\033[0m", c);     /* blue */
+    }   else {
                 printf("%c", c);        /* For all others without */
             }
         }
