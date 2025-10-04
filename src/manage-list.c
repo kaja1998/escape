@@ -7,8 +7,27 @@
 /* Function to create a new node with given value as data */
 Node* createNode(Player *player, Map *map) {
     Node* newNode = (Node*)malloc(sizeof(Node));
-    newNode->player = player;
-    newNode->map = map;
+    if (!newNode) {
+        fprintf(stderr, "Memory allocation failed\n");
+        exit(EXIT_FAILURE);
+    }
+
+    // Allocate and copy Player
+    newNode->player = malloc(sizeof(Player));
+    if (!newNode->player) {
+        fprintf(stderr, "Memory allocation failed for player\n");
+        exit(EXIT_FAILURE);
+    }
+    *(newNode->player) = *player;  // copy struct contents
+
+    // Allocate and copy Map
+    newNode->map = malloc(sizeof(Map));
+    if (!newNode->map) {
+        fprintf(stderr, "Memory allocation failed for map\n");
+        exit(EXIT_FAILURE);
+    }
+    *(newNode->map) = *map;  // copy struct contents
+
     newNode->next = NULL;
     newNode->prev = NULL;
     return newNode;
@@ -30,23 +49,19 @@ void insertAtBeginning(Node** head, Player *player, Map *map) {
 }
 
 /* Function to insert a node at the end */
-void insertAtEnd(Node** head, Player *player, Map *map) {
-    /* creating new node */
-    Node* newNode;
-    Node* temp;
-    
-    newNode = createNode(player, map);
+void insertAtEnd(Node **head, Player *player, Map *map) {
+    Node *newNode = createNode(player, map);
 
-    /* check if DLL is empty */
     if (*head == NULL) {
-        *head = newNode;
+        *head = newNode;  // empty list
         return;
     }
 
-    temp = *head;
+    Node *temp = *head;
     while (temp->next != NULL) {
         temp = temp->next;
     }
+
     temp->next = newNode;
     newNode->prev = temp;
 }
@@ -108,23 +123,27 @@ void deleteAtBeginning(Node** head) {
 
 /* Function to delete a node from the end */
 void deleteAtEnd(Node** head) {
-    Node* temp;
-    
-    /* checking if DLL is empty */
     if (*head == NULL) {
         printf("The list is already empty.\n");
         return;
     }
 
-    temp = *head;
+    Node* temp = *head;
+
+    // keep initial state (optional)
     if (temp->next == NULL) {
-        *head = NULL;
-        free(temp);
+        printf("Cannot undo the initial state.\n");
         return;
     }
+
     while (temp->next != NULL) {
         temp = temp->next;
     }
+
+    // free copied player and map
+    free(temp->player);
+    free(temp->map);
+
     temp->prev->next = NULL;
     free(temp);
 }
@@ -164,6 +183,22 @@ void deleteAtPosition(Node** head, int position) {
     }
 
     free(temp);
+}
+
+Node* getAtEnd(Node* head) {
+    Node* temp = head;
+
+    /* Move to the end of the list */
+    while (temp != NULL && temp->next != NULL) {
+        temp = temp->next;
+    }
+
+    /* Traverse backwards */
+    if (temp != NULL && temp->prev != NULL) {
+        temp = temp->prev;
+    }
+
+    return temp;
 }
 
 /* Function to print the list in forward direction */

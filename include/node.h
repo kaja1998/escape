@@ -7,8 +7,8 @@
 typedef struct Node {
     struct Player *player;
     struct Map *map;
-    struct Node* next;
-    struct Node* prev;
+    struct Node *next;
+    struct Node *prev;
 }Node;
 
 #endif
