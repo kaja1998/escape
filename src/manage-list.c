@@ -130,19 +130,16 @@ void deleteAtEnd(Node** head) {
 
     Node* temp = *head;
 
-    // keep initial state (optional)
+    // If only one node, keep it (optional)
     if (temp->next == NULL) {
         printf("Cannot undo the initial state.\n");
         return;
     }
 
+    // Traverse to the last node
     while (temp->next != NULL) {
         temp = temp->next;
     }
-
-    // free copied player and map
-    free(temp->player);
-    free(temp->map);
 
     temp->prev->next = NULL;
     free(temp);

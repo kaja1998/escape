@@ -19,8 +19,13 @@ void gameLoop(Game *game) {
 
     /* Start game-loop */
     while (result == SUCCESS) {
-        /* clearScreen(); */
         Node* currentStatus = getAtEnd(head);
+
+        if (currentStatus == NULL) {
+            printf("No more moves to undo.\n");
+            break;  // or continue; depending on desired behavior
+        }
+
         printMap(currentStatus->map);
         printf("Enter move (w/a/s/d to move, u to undo, q to quit): \n");
         input = getInput();
@@ -31,26 +36,23 @@ void gameLoop(Game *game) {
             case 'a':  /* left */
             case 's':  /* down */
             case 'd':  /* right */
-                printf("PlayerPosition: %d %d \n", game->player.playerPosX, game->player.playerPosY);
                 movePlayer(&game->map, &game->player.playerPosX, &game->player.playerPosY, input);
-                printf("Move planer returned \n");
                 insertAtEnd(&head, &game->player, &game->map);
                 break;
             case 'u': /* undo */
                 printf("Undoing last move.\n");
-                deleteAtEnd(head);
+                deleteAtEnd(&head);
                 break;
-
             case 'q': /* Quit */
                 printf("Exiting game.\n");
                 result = FAILURE;
                 break;
-
-            default: /* invalid input */
+            default:
                 printf("Invalid input. Please try again.\n");
                 continue;
         }
     }
+        
     disableRawMode();
 }
 
