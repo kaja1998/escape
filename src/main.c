@@ -23,7 +23,8 @@ int main(int argc, char *argv[]) {
     } else {
         gameLoop(game);  /* Map successfully loaded. Start game */
     }
-
+    
+    /* !!!!!!!!!!!!! free game memory */  
     printf("res = %d\n", mapLoad);
 
     return mapLoad; 

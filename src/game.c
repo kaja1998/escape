@@ -43,8 +43,10 @@ void gameLoop(Game *game) {
                         &currentStatus->game->player.playerPosY,
                         input);
                 if (gameStatus == WON) {
+                    printf("You reached the goal! You win!\n");
                     loopRuns = FALSE;
                 } else if (gameStatus == LOST) {
+                    printf("Player stepped into water! Game Over.\n");
                     loopRuns = FALSE;
                 } else {
                     insertAtEnd(&head, copyGame(currentStatus->game));
@@ -63,7 +65,8 @@ void gameLoop(Game *game) {
                 continue;
         }
     }
-        
+
+    /* !!!!!!!!!!!!! free copygame memory */  
     disableRawMode();
 }
 

@@ -56,10 +56,8 @@ int movePlayer(Map *map, int *playerPosX, int *playerPosY, char direction) {
         targetPos = map->mapGrid[newplayerPosX][newplayerPosY];
 
         if (targetPos == '~') {
-            printf("Player stepped into water! Game Over.\n");
             gameStatus = LOST;
         } else if (targetPos == 'G') {
-            printf("You reached the goal! You win!\n");
             updateMap(map, *playerPosX, *playerPosY, newplayerPosX, newplayerPosY);
             updatePlayerPosition(playerPosX, playerPosY, newplayerPosX, newplayerPosY);
             gameStatus = WON;
