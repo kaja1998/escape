@@ -26,25 +26,39 @@ Node* createNode(Game *game) {
 
 /* Function to insert a node at the end */
 void insertAtEnd(Node **head, Game *game) {
+    int isNewList = 0;
     Node *newNode = createNode(game);
     Node *temp;
 
+    /* Empty list */
     if (*head == NULL) {
-        *head = newNode;  /* empty list */
-        return;
+        isNewList = 1;
+        *head = newNode;  
     }
 
-    temp = *head;
-    while (temp->next != NULL) {
-        temp = temp->next;
+    /* Pre-existing list */
+    if(isNewList == 0) {
+        temp = *head;
+        while (temp->next != NULL) {
+            temp = temp->next;
+        }
+
+        temp->next = newNode;
+        newNode->prev = temp;
     }
 
-    temp->next = newNode;
-    newNode->prev = temp;
+    if (*head != NULL) {
+        printf("Game player position %d %d\n",
+            game->player.playerPosX,
+            game->player.playerPosY);
+        printf("Head player position %d %d\n",
+            (*head)->game->player.playerPosX,
+            (*head)->game->player.playerPosY);
+    }
 }
 
 /* Function to delete a node from the end */
-void deleteAtEnd(Node** head) {
+void deleteAtEnd(Node **head) {           
     Node* temp;
     if (*head == NULL) {
         printf("The list is already empty.\n");
