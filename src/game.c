@@ -9,11 +9,19 @@
 
 
 void gameLoop(Game *game) {
-    Node* head = NULL;
     int result = SUCCESS;
     char input;
+    Node* head = NULL;
 
-    insertAtEnd(&head, game); 
+    printf("Game loop player position: %d %d\n",
+        game->player.playerPosX,
+        game->player.playerPosY);
+
+    insertAtEnd(&head, copyGame(game)); 
+
+    printf("Game loop player position: %d %d\n",
+        game->player.playerPosX,
+        game->player.playerPosY);
 
     enableRawMode();
 
@@ -41,8 +49,7 @@ void gameLoop(Game *game) {
                         &currentStatus->game->player.playerPosY,
                         input);
 
-                game = currentStatus->game;
-                insertAtEnd(&head, copyGame(game));
+                insertAtEnd(&head, copyGame(currentStatus->game));
                 break;
             case 'u': /* undo */
                 printf("Undoing last move.\n");

@@ -4,7 +4,6 @@
 #include "../include/map.h"
 #include "../include/constants.h"
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include "../include/game.h"
