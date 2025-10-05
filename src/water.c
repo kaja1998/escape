@@ -4,11 +4,14 @@
 #include "../include/map.h"
 #include "../include/constants.h"
 
-
+/* Function to simulate water flooding across the map */
 void floodWater(Map *map) {
     int i, j;
     char **mapGridCopy = malloc(sizeof(char*) * map->rows);
 
+    /* "We make a copy of the map grid so that only the cells that already have water (‘~’) can spread it. 
+        Without this copy, the new water cells would start spreading right away, 
+        and the water would fill everything at once instead of spreading step by step as the player moves */
     for (i = 0; i < map->rows; i++) {
         mapGridCopy[i] = malloc(sizeof(char) * map->cols);
         for (j = 0; j < map->cols; j++)
@@ -17,7 +20,7 @@ void floodWater(Map *map) {
 
     for (i = 0; i < map->rows; i++) {
         for (j = 0; j < map->cols; j++) {
-            if (map->mapGrid[i][j] == '~') {
+            if (map->mapGrid[i][j] == '~') { /* If the current cell is water, check cells next to it */
 
 
                 /* Check if the cell above exists within the grid and is empty */
@@ -44,12 +47,12 @@ void floodWater(Map *map) {
     }
 
 
-    /* neue Karte übernehmen */
+    /* After processing, copy the modified mapGridCopy with the new water cells back to the original mapGrid */
     for (i = 0; i < map->rows; i++) {
         for (j = 0; j < map->cols; j++) {
             map->mapGrid[i][j] = mapGridCopy[i][j];
         }
-        free(mapGridCopy[i]);
+        free(mapGridCopy[i]); /* Free the memory for each row in mapGridCopy */
     }
-    free(mapGridCopy);
+    free(mapGridCopy); /* Free the memory for the mapGridCopy array */
 }
