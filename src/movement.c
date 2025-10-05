@@ -53,6 +53,7 @@ void movePlayer(Map *map, int *playerPosX, int *playerPosY, char direction) {
     if (newplayerPosX >= 0 && newplayerPosX < map->rows && newplayerPosY >= 0 && newplayerPosY < map->cols) {
         /* target-position free? */
         targetPos = map->mapGrid[newplayerPosX][newplayerPosY];
+
         if (targetPos == ' ' || targetPos == '~' || targetPos == 'G' || targetPos == '@') {
 
             if (targetPos == '@') {
