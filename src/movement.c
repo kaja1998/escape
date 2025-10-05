@@ -30,7 +30,6 @@ void removeTraps(Map *map) {
 void movePlayer(Map *map, int *playerPosX, int *playerPosY, char direction) {
     int newplayerPosX = *playerPosX;
     int newplayerPosY = *playerPosY;
-    int trapTriggered = 0;
     char targetPos;
 
     /* Calulate new Player position based on direction */
@@ -57,7 +56,7 @@ void movePlayer(Map *map, int *playerPosX, int *playerPosY, char direction) {
         if (targetPos == ' ' || targetPos == '~' || targetPos == 'G' || targetPos == '@') {
 
             if (targetPos == '@') {
-                trapTriggered = 1;  /* set trap triggered to true */
+                map->trapTriggered = 1;  /* set trap triggered to true */
                 removeTraps(map);
             }
             /* target position is free, move player */
@@ -66,7 +65,7 @@ void movePlayer(Map *map, int *playerPosX, int *playerPosY, char direction) {
             updateMap(map, *playerPosX, *playerPosY, newplayerPosX, newplayerPosY);     /* pass variable */
             updatePlayerPosition(playerPosX, playerPosY, newplayerPosX, newplayerPosY);     /* pass pointer */
 
-            if (trapTriggered) {
+            if (map->trapTriggered) {
                 floodWater(map);
             }
         } else {

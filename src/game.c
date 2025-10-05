@@ -12,6 +12,7 @@ void gameLoop(Game *game) {
     int result = SUCCESS;
     char input;
     Node* head = NULL;
+    game->map.trapTriggered = 0;
 
     printf("Game loop player position: %d %d\n",
         game->player.playerPosX,

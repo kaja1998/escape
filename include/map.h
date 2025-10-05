@@ -7,6 +7,7 @@ typedef struct Map {
     int rows;
     int cols;
     char **mapGrid;
+    int trapTriggered;
 } Map;
 
 char numToSymbol(int num);
