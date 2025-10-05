@@ -4,13 +4,6 @@
 #include "../include/map.h"
 #include "../include/constants.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include "../include/game.h"
-#include "../include/map.h"
-#include "../include/constants.h"
-
-
 int main(int argc, char *argv[]) {
     int mapResult = FAILURE;
     Game *game = malloc(sizeof(Game));  /* Allocate memory for the Game structure */
