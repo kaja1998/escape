@@ -26,23 +26,26 @@ Node* createNode(Game *game) {
 
 /* Function to insert a node at the end */
 void insertAtEnd(Node **head, Game *game) {
-    int isNewList = 0;
-    Node *newNode = createNode(game);
+    int isNewList = 0; /* local var to remeber if list was empty (new) or already existing */
+    Node *newNode = createNode(game); /* Create a new node using the provided game data */
     Node *temp;
 
-    /* Empty list */
+    /* Check if the list is empty */
     if (*head == NULL) {
         isNewList = 1;
-        *head = newNode;  
+        *head = newNode;  /* If empty, set the new node as the head of the list */
     }
 
-    /* Pre-existing list */
+    /* If the list already has nodes */
     if(isNewList == 0) {
         temp = *head;
+
+        /* Traverse to the last node */
         while (temp->next != NULL) {
             temp = temp->next;
         }
 
+        /* Link the new node at the end of the list */
         temp->next = newNode;
         newNode->prev = temp;
     }
@@ -65,9 +68,9 @@ void deleteAtEnd(Node **head) {
         return;
     }
 
-    temp = *head;
+    temp = *head; /* Points to the first node */
 
-    /* If only one node, keep it (optional) */
+    /* If only one node, refuses to delete because this is initial game */
     if (temp->next == NULL) {
         printf("Cannot undo the initial state.\n");
         return;
@@ -82,8 +85,11 @@ void deleteAtEnd(Node **head) {
     free(temp);
 }
 
+/* Function finds and returns the last node of the linked list. 
+    If the list is empty (head == NULL), it returns NULL. 
+*/
 Node* getAtEnd(Node* head) {
-    Node* temp = head;
+    Node* temp = head;      /* gets pointer to the head of the chained list */
 
     /* Move to the end of the list */
     while (temp != NULL && temp->next != NULL) {

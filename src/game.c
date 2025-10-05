@@ -14,22 +14,19 @@ void gameLoop(Game *game) {
     Node* head = NULL;
     game->map.trapTriggered = 0;
 
-    printf("Game loop player position: %d %d\n",
-        game->player.playerPosX,
-        game->player.playerPosY);
+
 
     insertAtEnd(&head, copyGame(game)); 
 
-    printf("Game loop player position: %d %d\n",
-        game->player.playerPosX,
-        game->player.playerPosY);
+
 
     enableRawMode();
 
     /* Start game-loop */
     while (result == SUCCESS) {
-        Node *currentStatus = getAtEnd(head);
+        Node *currentStatus = getAtEnd(head);   /* Makes sure the status of the game is the latest */
 
+        /* Should never happen, if so then initial state got deleted! */
         if (currentStatus == NULL) {
             printf("No more moves to undo.\n");
             break;  /* or continue; depending on desired behavior */
