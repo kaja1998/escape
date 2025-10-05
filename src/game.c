@@ -9,16 +9,17 @@
 
 
 void gameLoop(Game *game) {
-    int result = SUCCESS;
+    int loopRuns = TRUE;
     char input;
     Node* head = NULL;
+    int gameStatus = CONTINUE;
     game->map.trapTriggered = 0;
-    
+
     insertAtEnd(&head, copyGame(game)); 
     enableRawMode();
 
     /* Start game-loop */
-    while (result == SUCCESS) {
+    while (loopRuns == TRUE) {
         Node *currentStatus = getAtEnd(head);   /* Makes sure the status of the game is the latest */
 
         /* Should never happen, if so then initial state got deleted! */
@@ -37,12 +38,17 @@ void gameLoop(Game *game) {
             case 'a':  /* left */
             case 's':  /* down */
             case 'd':  /* right */
-                movePlayer(&currentStatus->game->map,
+                gameStatus = movePlayer(&currentStatus->game->map,
                         &currentStatus->game->player.playerPosX,
                         &currentStatus->game->player.playerPosY,
                         input);
-
-                insertAtEnd(&head, copyGame(currentStatus->game));
+                if (gameStatus == WON) {
+                    loopRuns = FALSE;
+                } else if (gameStatus == LOST) {
+                    loopRuns = FALSE;
+                } else {
+                    insertAtEnd(&head, copyGame(currentStatus->game));
+                }
                 break;
             case 'u': /* undo */
                 printf("Undoing last move.\n");
@@ -50,7 +56,7 @@ void gameLoop(Game *game) {
                 break;
             case 'q': /* Quit */
                 printf("Exiting game.\n");
-                result = FAILURE;
+                loopRuns = FALSE;
                 break;
             default:
                 printf("Invalid input. Please try again.\n");

@@ -5,18 +5,18 @@
 #include "../include/constants.h"
 
 int main(int argc, char *argv[]) {
-    int mapResult = FAILURE;
+    int mapLoad = FAILURE;
     Game *game = malloc(sizeof(Game));  /* Allocate memory for the Game structure */
 
     /* First check: was exactly one argument provided? */
     if (argc != 2) {
         printf("Not Accepted. You used: ./escape <map_file>\n");
-        mapResult = FAILURE;
+        mapLoad = FAILURE;
     } 
     
-    mapResult = loadMap(game, argv[1]);
+    mapLoad = loadMap(game, argv[1]);
     
-    if (mapResult == FAILURE) {
+    if (mapLoad == FAILURE) {
         printf("Error loading map file.\n");  
         destroyMap(&game->map); /* Pointer on map member */
         free(game);
@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
         gameLoop(game);  /* Map successfully loaded. Start game */
     }
 
-    printf("res = %d\n", mapResult);
+    printf("res = %d\n", mapLoad);
 
-    return mapResult; 
+    return mapLoad; 
 }

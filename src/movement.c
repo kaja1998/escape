@@ -28,10 +28,11 @@ void removeTraps(Map *map) {
     }
 }
 
-void movePlayer(Map *map, int *playerPosX, int *playerPosY, char direction) {
+int movePlayer(Map *map, int *playerPosX, int *playerPosY, char direction) {
     int newplayerPosX = *playerPosX;
     int newplayerPosY = *playerPosY;
     char targetPos;
+    int gameStatus = CONTINUE;
 
     /* Calulate new Player position based on direction */
     switch (direction) {
@@ -54,20 +55,31 @@ void movePlayer(Map *map, int *playerPosX, int *playerPosY, char direction) {
         /* target-position free? */
         targetPos = map->mapGrid[newplayerPosX][newplayerPosY];
 
-        if (targetPos == ' ' || targetPos == 'G' || targetPos == '@') {
-
+        if (targetPos == '~') {
+            printf("Player stepped into water! Game Over.\n");
+            gameStatus = LOST;
+        } else if (targetPos == 'G') {
+            printf("You reached the goal! You win!\n");
+            updateMap(map, *playerPosX, *playerPosY, newplayerPosX, newplayerPosY);
+            updatePlayerPosition(playerPosX, playerPosY, newplayerPosX, newplayerPosY);
+            gameStatus = WON;
+        } else if (targetPos == ' ' || targetPos == '@') {
             if (targetPos == '@') {
-                map->trapTriggered = 1;  /* set trap triggered to true */
+                map->trapTriggered = 1;
                 removeTraps(map);
             }
-            /* target position is free, move player */
+
             printf("Player moves to (%d, %d)\n", newplayerPosX, newplayerPosY);
             printf("Old Player pos is now ' '(%d, %d)\n", *playerPosX, *playerPosY);
-            updateMap(map, *playerPosX, *playerPosY, newplayerPosX, newplayerPosY);     /* pass variable */
-            updatePlayerPosition(playerPosX, playerPosY, newplayerPosX, newplayerPosY);     /* pass pointer */
+            updateMap(map, *playerPosX, *playerPosY, newplayerPosX, newplayerPosY);
+            updatePlayerPosition(playerPosX, playerPosY, newplayerPosX, newplayerPosY);
 
             if (map->trapTriggered) {
                 floodWater(map);
+                if (map->mapGrid[*playerPosX][*playerPosY] == '~') {
+                    printf("Water has reached you! Game Over.\n");
+                    gameStatus =LOST;
+                }
             }
         } else {
             printf("Cannot move there. It's blocked by %c\n", targetPos);
@@ -75,4 +87,5 @@ void movePlayer(Map *map, int *playerPosX, int *playerPosY, char direction) {
     } else {
         printf("Move out of bounds!\n");
     }
+    return gameStatus;
 }
