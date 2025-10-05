@@ -3,6 +3,7 @@
 #include "../include/game.h"
 #include "../include/map.h"
 #include "../include/constants.h"
+#include "../include/water.h"
 
 void updateMap(Map *map, int oldPlayerPosX, int oldPlayerPosY, int newplayerPosX, int newplayerPosY) {
     map->mapGrid[oldPlayerPosX][oldPlayerPosY] = ' ';
