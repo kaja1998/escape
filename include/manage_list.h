@@ -1,5 +1,5 @@
-#ifndef MANAGE-LIST_H
-#define MANAGE-LIST_H
+#ifndef MANAGE_LIST_H
+#define MANAGE_LIST_H
 
 #include "player.h"
 #include "map.h"

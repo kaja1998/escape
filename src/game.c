@@ -5,7 +5,7 @@
 #include "../include/movement.h"
 #include "../include/constants.h"
 #include "../include/node.h"
-#include "../include/manage-list.h"
+#include "../include/manage_list.h"
 
 
 void gameLoop(Game *game) {

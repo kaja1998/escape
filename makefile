@@ -29,7 +29,7 @@ water.o: src/water.c include/water.h
 input.o: src/input.c include/input.h
 	$(CC) $(CFLAGS) -c src/input.c -o src/input.o
 
-manage-list.o: src/manage-list.c include/node.h
+manage-list.o: src/manage-list.c include/manage_list.h include/node.h
 	$(CC) $(CFLAGS) -c src/manage-list.c src/manage-list.o
 
 clean:
