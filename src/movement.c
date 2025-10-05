@@ -54,7 +54,7 @@ void movePlayer(Map *map, int *playerPosX, int *playerPosY, char direction) {
         /* target-position free? */
         targetPos = map->mapGrid[newplayerPosX][newplayerPosY];
 
-        if (targetPos == ' ' || targetPos == '~' || targetPos == 'G' || targetPos == '@') {
+        if (targetPos == ' ' || targetPos == 'G' || targetPos == '@') {
 
             if (targetPos == '@') {
                 map->trapTriggered = 1;  /* set trap triggered to true */

@@ -13,13 +13,8 @@ void gameLoop(Game *game) {
     char input;
     Node* head = NULL;
     game->map.trapTriggered = 0;
-
-
-
+    
     insertAtEnd(&head, copyGame(game)); 
-
-
-
     enableRawMode();
 
     /* Start game-loop */
@@ -29,7 +24,7 @@ void gameLoop(Game *game) {
         /* Should never happen, if so then initial state got deleted! */
         if (currentStatus == NULL) {
             printf("No more moves to undo.\n");
-            break;  /* or continue; depending on desired behavior */
+            break;
         }
 
         printMap(&currentStatus->game->map);
