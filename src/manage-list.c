@@ -107,6 +107,7 @@ Game* copyGame(Game* original) {
     /* Copy map dimensions */
     newGame->map.rows = original->map.rows;
     newGame->map.cols = original->map.cols;
+    newGame->map.trapTriggered = original->map.trapTriggered;
 
     /* Allocate memory for the new map grid */
     newGame->map.mapGrid = malloc(original->map.rows * sizeof(char*));
