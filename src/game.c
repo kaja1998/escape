@@ -43,9 +43,11 @@ void gameLoop(Game *game) {
                         &currentStatus->game->player.playerPosY,
                         input);
                 if (gameStatus == WON) {
+                    printMap(&currentStatus->game->map);
                     printf("You reached the goal! You win!\n");
                     loopRuns = FALSE;
                 } else if (gameStatus == LOST) {
+                    printMap(&currentStatus->game->map);
                     printf("Player stepped into water! Game Over.\n");
                     loopRuns = FALSE;
                 } else {
