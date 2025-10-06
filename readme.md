@@ -20,13 +20,13 @@ This README outlines the Prerequisites, how to run the game, the Characters in t
 ### Prerequisites
 - A Linux system with a terminal.
 - A C compiler such as gcc for building the game.
-- The *make* command for building and compiling the program.
+- The `make` command for building and compiling the program.
 - **Alternatively**, VS Code with the C/C++ extension can be used for building and running the game.
 
 ## Run the Game
-- Run *make* in the project directory to compile the game.
-- After compilation, execute *./escape map.txt* to start the game.
-- Once you're done, clean up the build files by running *make clean*.
+- Run `make` in the project directory to compile the game.
+- After compilation, execute `./escape map.txt` to start the game.
+- Once you're done, clean up the build files by running `make clean`.
 
 ## Characters on the Map
 - '*' → Border
@@ -40,11 +40,11 @@ This README outlines the Prerequisites, how to run the game, the Characters in t
 
 ## Game Mechanics
 ### Player Movement:
-- w: Move up.
-- s: Move down.
-- a: Move left.
-- d: Move right.
-- u: Undo the last action.
+- `w`: Move up.
+- `s`: Move down.
+- `a`: Move left.
+- `d`: Move right.
+- `u`: Undo the last action.
 
 ### Win/Lose Conditions:
 - **Win:** Reach the goal (*G*).
