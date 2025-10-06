@@ -15,8 +15,8 @@ void gameLoop(Game *game) {
     int gameStatus = CONTINUE;
     game->map.trapTriggered = 0;
 
-    insertAtEnd(&head, copyGame(game)); 
-    enableRawMode();
+    insertAtEnd(&head, copyGame(game)); /* Put initial game state into list */
+    enableRawMode();    /* characters entered are send immediately to the program */
 
     /* Start game-loop */
     while (loopRuns == TRUE) {

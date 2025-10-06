@@ -57,14 +57,14 @@ int movePlayer(Map *map, int *playerPosX, int *playerPosY, char direction) {
 
         if (targetPos == '~') {
             gameStatus = LOST;
-        } else if (targetPos == 'G') {
+        } else if (targetPos == 'G') {  /* player steps on goal and wins */
             updateMap(map, *playerPosX, *playerPosY, newplayerPosX, newplayerPosY);
             updatePlayerPosition(playerPosX, playerPosY, newplayerPosX, newplayerPosY);
             gameStatus = WON;
         } else if (targetPos == ' ' || targetPos == '@') {
-            if (targetPos == '@') {
-                map->trapTriggered = 1;
-                removeTraps(map);
+            if (targetPos == '@') {     /* players steps on trap */
+                map->trapTriggered = 1; /* Set var to true*/
+                removeTraps(map);       /* remove traps so water starts to spread */
             }
 
             printf("Player moves to (%d, %d)\n", newplayerPosX, newplayerPosY);
@@ -72,8 +72,8 @@ int movePlayer(Map *map, int *playerPosX, int *playerPosY, char direction) {
             updateMap(map, *playerPosX, *playerPosY, newplayerPosX, newplayerPosY);
             updatePlayerPosition(playerPosX, playerPosY, newplayerPosX, newplayerPosY);
 
-            if (map->trapTriggered) {
-                floodWater(map);
+            if (map->trapTriggered) { /* Check if var is true */
+                floodWater(map);    /* if true, water starts to spread */
                 if (map->mapGrid[*playerPosX][*playerPosY] == '~') {
                     printf("Water has reached you! Game Over.\n");
                     gameStatus =LOST;
