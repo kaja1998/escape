@@ -15,37 +15,37 @@ This README outlines the Prerequisites, how to run the game, the Characters in t
 - The make command for building and compiling the program.
 
 ## Run the Game
-Run *make* in your terminal to compile the game from the source code.
-Once compiled, start the game by running: *./escape map.txt*.
-After you're done, you can clean up the build files by running: *make clean*.
+- Run *make* in your terminal to compile the game from the source code.
+- Once compiled, start the game by running: *./escape map.txt*.
+- After you're done, you can clean up the build files by running: *make clean*.
 
 ## Characters on the Map
-'*' → Border
-'P' → Player
-'G' → Goal (green background)
-'@' → Trap (red background)
-'~' → Water (blue background)
-'X' → Trapdoors
-'O' → Walls
-' ' → Empty space
+- *** → Border
+- *P* → Player
+- 'G' → Goal (green background)
+- '@' → Trap (red background)
+- '~' → Water (blue background)
+- 'X' → Trapdoors
+- 'O' → Walls
+- ' ' → Empty space
 
 ## Game Mechanics
 ### Player Movement:
-w: Move up.
-s: Move down.
-a: Move left.
-d: Move right.
-u: Undo the last action.
+- w: Move up.
+- s: Move down.
+- a: Move left.
+- d: Move right.
+- u: Undo the last action.
 
 ### Win/Lose Conditions:
-**Win:** Reach the goal (G).
-**Lose:** The water spreads and touches the player (P) or the player walks into the water.
+- **Win:** Reach the goal (*G*).
+- **Lose:** The water spreads and touches the player (*P*) or the player walks into the water.
 
 ### Trap Mechanics:
-Traps (represented by @) can be triggered, causing the trapdoors (X) to disappear and starting the water flooding process. Water spreads across the map in every direction after a trap is triggered.
+Traps (represented by *@*) can be triggered, causing the trapdoors (X) to disappear and starting the water flooding process. Water spreads across the map in every direction after a trap is triggered.
 
 ### Undo Feature:
-The game supports undoing moves using the u command. This will restore the player’s previous state, including position, water state, and trap state.
+The game supports undoing moves using the *u* command. This will restore the player’s previous state, including position, water state, and trap state.
 
 ### Water Spreading:
 Water spreads automatically once triggered. It spreads to adjacent cells (up, down, left, right) on each turn.
