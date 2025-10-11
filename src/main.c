@@ -7,24 +7,24 @@
 int main(int argc, char *argv[]) {
     int mapLoad = FAILURE;
     Game *game = malloc(sizeof(Game));  /* Allocate memory for the Game structure */
+    game->map.mapGrid = NULL; /* Set to NULL so destroyMap can safely free on load failure */
 
-    /* First check: was exactly one argument provided? */
+    /* Was exactly one argument provided? */
     if (argc != 2) {
         printf("Not Accepted. You used: ./escape <map_file>\n");
         mapLoad = FAILURE;
-    } 
-    
-    mapLoad = loadMap(game, argv[1]);
-    
-    if (mapLoad == FAILURE) {
-        printf("Error loading map file.\n");  
-        destroyMap(&game->map); /* Pointer on map member */
-        free(game);
-    } else {
-        gameLoop(game);  /* Map successfully loaded. Start game */
+    } else { /* if yes, then loadMap*/
+        mapLoad = loadMap(game, argv[1]);
     }
     
-    /* !!!!!!!!!!!!! free game memory */  
+    if (mapLoad == SUCCESS) {
+        gameLoop(game); /* Map successfully loaded. Start game */
+    } else {
+        printf("Error loading map file.\n");
+    }
+    
+    destroyMap(&game->map); /* Free map memory after gameLoop or failure of mapLoad*/
+    free(game); /* Free game struc */
     printf("res = %d\n", mapLoad);
 
     return mapLoad; 

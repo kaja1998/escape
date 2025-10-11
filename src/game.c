@@ -11,16 +11,17 @@
 void gameLoop(Game *game) {
     int loopRuns = TRUE;
     char input;
-    Node* head = NULL;
     int gameStatus = CONTINUE;
+    Node* head = NULL;
+    Game* newGameCopy = NULL;
     game->map.trapTriggered = 0;
 
-    insertAtEnd(&head, copyGame(game)); /* Put initial game state into list */
+    insertAtEnd(&head, copyGame(game)); /* Put initial game state into list before start copying the game - initial game state remains clean */
     enableRawMode();    /* characters entered are send immediately to the program */
 
     /* Start game-loop */
     while (loopRuns == TRUE) {
-        Node *currentStatus = getAtEnd(head);   /* Makes sure the status of the game is the latest */
+        Node *currentStatus = getAtEnd(head);   /* Makes sure the status of the game is the last one in list */
 
         /* Should never happen, if so then initial state got deleted! */
         if (currentStatus == NULL) {
@@ -28,7 +29,7 @@ void gameLoop(Game *game) {
             break;
         }
 
-        printMap(&currentStatus->game->map);
+        printMap(&currentStatus->game->map);    /* print last game status in list */
         printf("Enter move (w/a/s/d to move, u to undo, q to quit): \n");
         input = getInput();
         printf("%c\n", input);
@@ -38,20 +39,26 @@ void gameLoop(Game *game) {
             case 'a':  /* left */
             case 's':  /* down */
             case 'd':  /* right */
-                gameStatus = movePlayer(&currentStatus->game->map,
-                        &currentStatus->game->player.playerPosX,
-                        &currentStatus->game->player.playerPosY,
+                newGameCopy = copyGame(currentStatus->game); /* new game copy for next move */
+                gameStatus = movePlayer(&newGameCopy->map,
+                        &newGameCopy->player.playerPosX,
+                        &newGameCopy->player.playerPosY,
                         input);
                 if (gameStatus == WON) {
-                    printMap(&currentStatus->game->map);
+                    printMap(&newGameCopy->map);
                     printf("You reached the goal! You win!\n");
                     loopRuns = FALSE;
+                    freeGameCopy(newGameCopy);
+                    freeLinkedList(&head);
                 } else if (gameStatus == LOST) {
-                    printMap(&currentStatus->game->map);
+                    printMap(&newGameCopy->map);
                     printf("Player stepped into water! Game Over.\n");
+                    freeGameCopy(newGameCopy);
+                    freeLinkedList(&head);
                     loopRuns = FALSE;
                 } else {
-                    insertAtEnd(&head, copyGame(currentStatus->game));
+                    insertAtEnd(&head, newGameCopy);
+                    newGameCopy = NULL;
                 }
                 break;
             case 'u': /* undo */
@@ -60,6 +67,10 @@ void gameLoop(Game *game) {
                 break;
             case 'q': /* Quit */
                 printf("Exiting game.\n");
+                if (newGameCopy != NULL){
+                    freeGameCopy(newGameCopy);
+                }
+                freeLinkedList(&head);
                 loopRuns = FALSE;
                 break;
             default:
@@ -67,8 +78,6 @@ void gameLoop(Game *game) {
                 continue;
         }
     }
-
-    /* !!!!!!!!!!!!! free copygame memory */  
     disableRawMode();
 }
 
