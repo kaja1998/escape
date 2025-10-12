@@ -10,5 +10,6 @@
 #define CONTINUE 0
 #define WON 1
 #define LOST -1
+#define NO_MOVE 2
 
 #endif

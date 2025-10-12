@@ -76,14 +76,16 @@ int movePlayer(Map *map, int *playerPosX, int *playerPosY, char direction) {
                 floodWater(map);    /* if true, water starts to spread */
                 if (map->mapGrid[*playerPosX][*playerPosY] == '~') {
                     printf("Water has reached you! Game Over.\n");
-                    gameStatus =LOST;
+                    gameStatus = LOST;
                 }
             }
         } else {
             printf("Cannot move there. It's blocked by %c\n", targetPos);
+            gameStatus = NO_MOVE;
         }
     } else {
         printf("Move out of bounds!\n");
+        gameStatus = NO_MOVE;
     }
     return gameStatus;
 }

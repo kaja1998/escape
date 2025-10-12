@@ -56,6 +56,9 @@ void gameLoop(Game *game) {
                     freeGameCopy(newGameCopy);
                     freeLinkedList(&head);
                     loopRuns = FALSE;
+                } else if (gameStatus == NO_MOVE) {
+                    printf("No move made.\n");
+                    freeGameCopy(newGameCopy);
                 } else {
                     insertAtEnd(&head, newGameCopy);
                     newGameCopy = NULL;
