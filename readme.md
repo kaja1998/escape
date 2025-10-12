@@ -11,7 +11,7 @@ This README outlines the Prerequisites, how to run the game, the Characters in t
 
 ## Getting Started
 ### Prerequisites
-- A Linux system with a terminal.
+- A Linux system with a terminal or WLS Extension (thats what it was coded it).
 - A C compiler such as gcc for building the game.
 - The `make` command for building and compiling the program.
 - **Alternatively**, VS Code with the C/C++ extension can be used for building and running the game.
