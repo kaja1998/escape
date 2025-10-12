@@ -33,12 +33,11 @@ char numToSymbol(int num) {
     return symbol;
 }
 
-
-/* Opens the file and loads the map */
+/* Opens the file and load the map */
 int loadMap(Game *game, const char *filename) {
-    int result = SUCCESS; /* false */
+    int result = SUCCESS;
     int rows = 0;
-    int cols = 0;    /* Declare rows and coloums */
+    int cols = 0;
     int i;
     int j;
     int fileValue;
@@ -46,7 +45,7 @@ int loadMap(Game *game, const char *filename) {
    
     if (!file){     /* check if it is possible to open file */
         result = FAILURE;
-        printf("fail 1: Could not open file.\n");
+        printf("Error: Could not open file.\n");
     } else if(fscanf(file, "%d %d", &rows, &cols) != 2 || rows <= 0 || cols <= 0) {     /* Scan first row to see how big the memory has to be */
         fclose(file);
         result = FAILURE;
@@ -54,17 +53,17 @@ int loadMap(Game *game, const char *filename) {
     } else if(!allocateMap(&game->map, rows, cols)) {        /* Address of map to function. If map allocating fails, close file and return failure */
         fclose(file);
         result = FAILURE;
-        printf("fail 3: Allocating map failed. res= %d\n", result);
+        printf("Error: Allocating map failed.");
     } else {
         for (i = 0; i < rows && result == SUCCESS ; i++) {
             for (j = 0; j < cols && result == SUCCESS ; j++) {
-                if (fscanf(file, "%d", &fileValue) != 1) {      /* Tries to read one by one integer from the file */
-                    result = FAILURE;     /* If the file format is incorrect (!=1) will return false */
-                    printf("fail 4: Invalid map file format detected. res= %d\n", result);
+                if (fscanf(file, "%d", &fileValue) != 1) {      /* Trie to read one by one integer from the file */
+                    result = FAILURE;     /* If the file format is incorrect (!=1) return false */
+                    printf("Error: Invalid map file format detected.");
                 }
                 game->map.mapGrid[i][j] = numToSymbol(fileValue);      /* If reading was successfull, the value will be transformed into a symbol and saved into 2d array cells*/
             
-                if (game->map.mapGrid[i][j] == 'P') {       /* get player Position */
+                if (game->map.mapGrid[i][j] == 'P') {       /* Get player Position */
                     game->player.playerPosX = i;  
                     game->player.playerPosY = j; 
                 }
@@ -75,19 +74,18 @@ int loadMap(Game *game, const char *filename) {
     return result;
 }
 
-
 /* Print map on display */
 void printMap(Map *map) {
     int i;
     int j;
 
-    for (j = 0; j < map->cols + 2; j++) {
+    for (j = 0; j < map->cols + 2; j++) { /* Print top border of game */
         printf("*");
     }
     printf("\n");
 
     for (i = 0; i < map->rows; i++) {
-        printf("*");
+        printf("*");    /* Print left border of game */
         for (j = 0; j < map->cols; j++) {
             char c = map->mapGrid[i][j];
             if (c == '@') {
@@ -96,16 +94,16 @@ void printMap(Map *map) {
             else if (c == 'G'){
                 printf("\033[42m%c\033[0m", c);     /* Background green */
             }     else if (c == '~') {
-            printf("\033[44m%c\033[0m", c); /* blue */
+            printf("\033[44m%c\033[0m", c);     /* blue */
     }   else {
                 printf("%c", c);        /* For all others without */
             }
         }
-        printf("*");
+        printf("*");    /* Print right border of game */
         printf("\n");
     }
 
-    for (j = 0; j < map->cols + 2; j++) {
+    for (j = 0; j < map->cols + 2; j++) { /* Print bottom border of game */
         printf("*");
     }
     printf("\n");

@@ -4,7 +4,7 @@
 
 /* For this class I used code from here: https://viewsourcecode.org/snaptoken/kilo/02.enteringRawMode.html */
 
-static struct termios orig_termios; /* global, need to change that later */
+static struct termios orig_termios; /* Global, need to change that later */
 
 void disableRawMode() {
     tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios); 

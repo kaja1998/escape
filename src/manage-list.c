@@ -1,7 +1,7 @@
-#include "../include/node.h"
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "../include/node.h"
 
 /* Function to create a new node with given value as data */
 Node* createNode(Game *gameCopy) {
@@ -10,13 +10,12 @@ Node* createNode(Game *gameCopy) {
 
     /* Check if allocation has been successful before proceeding */
     if (newNode != NULL) {
-        /* Allocate and copy Player */
-        newNode->game = gameCopy;
+        newNode->game = gameCopy;   /* Allocate and copy Player */
 
         /* Check if gameCopy that was passed to the method is != NULL */
         if (newNode->game != NULL) {
-            /* Copy the contents of the provided Game into the new one */
-            *(newNode->game) = *gameCopy;
+
+            *(newNode->game) = *gameCopy;   /* Copy the contents of the provided Game into the new one */
             newNode->next = NULL;
             newNode->prev = NULL;
         } else {
@@ -29,8 +28,8 @@ Node* createNode(Game *gameCopy) {
 
 /* Function to insert a node at the end */
 void insertAtEnd(Node **head, Game *game) {
-    int isNewList = 0; /* local var to remeber if list was empty (new) or already existing */
-    Node *newNode = createNode(game); /* Create a new node using the provided game data */
+    int isNewList = 0;      /* local var to remeber if list was empty (new) or already existing */
+    Node *newNode = createNode(game);      /* Create a new node using the provided game data */
     Node *temp;
 
     /* Check if the list is empty */
@@ -57,8 +56,7 @@ void insertAtEnd(Node **head, Game *game) {
 }
 
 /* Function finds and returns the last node of the linked list. 
-    If the list is empty (head == NULL), it returns NULL. 
-*/
+    If the list is empty (head == NULL), it returns NULL. */
 Node* getAtEnd(Node* head) {
     Node* temp = head;      /* Gets pointer to the head of the linked list */
 
@@ -75,7 +73,7 @@ Game* copyGame(const Game* original) {
     int i, j;
 
     /* Check if memory could be allocated */
-    Game* newGame = malloc(sizeof(Game));
+    Game* newGame = (Game*) malloc(sizeof(Game));
     if (newGame != NULL) {
         /* Copy simple fields */
         newGame->player = original->player;
@@ -90,7 +88,7 @@ Game* copyGame(const Game* original) {
             for (i = 0; i < original->map.rows; i++) {
                 newGame->map.mapGrid[i] = malloc(original->map.cols * sizeof(char));
                 if (newGame->map.mapGrid[i] == NULL) {
-                    printf("Failed to allocate memory for map row %d\n", i);
+                    printf("Error: Failed to allocate memory for map row %d\n", i);
                     /* Free any previously allocated rows */
                     for (j = 0; j < i; j++) {
                         free(newGame->map.mapGrid[j]);
@@ -106,11 +104,11 @@ Game* copyGame(const Game* original) {
                 }
             }
         } else {
-            printf("Failed to allocate memory for mapGrid\n");
+            printf("Error: Failed to allocate memory for mapGrid\n");
             free(newGame);
         }
     } else {
-        printf("Failed to allocate memory for Game\n");
+        printf("Error: Failed to allocate memory for Game\n");
     }
 
     return newGame;
@@ -156,12 +154,10 @@ void deleteAtEnd(Node **head) {
     Node* temp;
     /* Check if list is empty */
     if (*head != NULL) {
-        /* Points to the first node */
-        temp = *head; 
-        /* If only one node, refuses to delete because this is initial game */
-        if (temp->next != NULL) {
-            /* Traverse to the last node */
-            while (temp->next != NULL) {
+        temp = *head;   /* Points to the first node */
+
+        if (temp->next != NULL) {   /* If only one node, refuses to delete because this is initial game */
+            while (temp->next != NULL) {    /* Traverse to the last node */
                 temp = temp->next;
             }
 
@@ -169,8 +165,7 @@ void deleteAtEnd(Node **head) {
             temp->prev->next = NULL; /* Disconnects the last node from list */
             free(temp); /*free note */
         } else {
-            printf("Cannot undo the initial state.\n");
-            return;   
+            return; /* Cannot undo the initial state */
         }
     } else {
         printf("The list is already empty.\n");

@@ -15,7 +15,6 @@ void updatePlayerPosition(int *playerPosX, int *playerPosY, int newplayerPosX, i
     *playerPosY = newplayerPosY;
 }
 
-
 void removeTraps(Map *map) {
     int i;
     int j;
@@ -67,25 +66,17 @@ int movePlayer(Map *map, int *playerPosX, int *playerPosY, char direction) {
                 removeTraps(map);       /* remove traps so water starts to spread */
             }
 
-            printf("Player moves to (%d, %d)\n", newplayerPosX, newplayerPosY);
-            printf("Old Player pos is now ' '(%d, %d)\n", *playerPosX, *playerPosY);
             updateMap(map, *playerPosX, *playerPosY, newplayerPosX, newplayerPosY);
             updatePlayerPosition(playerPosX, playerPosY, newplayerPosX, newplayerPosY);
 
-            if (map->trapTriggered) { /* Check if var is true */
-                floodWater(map);    /* if true, water starts to spread */
-                if (map->mapGrid[*playerPosX][*playerPosY] == '~') {
-                    printf("Water has reached you! Game Over.\n");
-                    gameStatus = LOST;
-                }
+            if (map->trapTriggered) {   /* Check if var is true */
+                gameStatus = floodWater(map);    /* if true, water starts to spread */
             }
         } else {
-            printf("Cannot move there. It's blocked by %c\n", targetPos);
-            gameStatus = NO_MOVE;
+            gameStatus = NO_MOVE; /* Can not move there. It's blocked by wall (0) or Traps (X)*/
         }
     } else {
-        printf("Move out of bounds!\n");
-        gameStatus = NO_MOVE;
+        gameStatus = NO_MOVE;   /* Move out of bounds (*). Do nothing. */
     }
     return gameStatus;
 }

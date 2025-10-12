@@ -1,6 +1,6 @@
 #ifndef WATER_H
 #define WATER_H
 
-void floodWater(Map *map);
+int floodWater(Map *map);
 
 #endif

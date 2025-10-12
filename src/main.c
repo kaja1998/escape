@@ -11,21 +11,20 @@ int main(int argc, char *argv[]) {
 
     /* Was exactly one argument provided? */
     if (argc != 2) {
-        printf("Not Accepted. You used: ./escape <map_file>\n");
+        printf("Not Accepted. You have to use './escape maps/map.txt'.\n");
         mapLoad = FAILURE;
-    } else { /* if yes, then loadMap*/
-        mapLoad = loadMap(game, argv[1]);
+    } else {
+        mapLoad = loadMap(game, argv[1]); /* if yes, then loadMap */
     }
     
     if (mapLoad == SUCCESS) {
         gameLoop(game); /* Map successfully loaded. Start game */
     } else {
-        printf("Error loading map file.\n");
+        printf("Error: Map could not be loaded.\n");
     }
     
-    destroyMap(&game->map); /* Free map memory after gameLoop or failure of mapLoad*/
+    destroyMap(&game->map); /* Free map memory after gameLoop or failure of mapLoad */
     free(game); /* Free game struc */
-    printf("res = %d\n", mapLoad);
 
     return mapLoad; 
 }
