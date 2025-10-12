@@ -4,14 +4,19 @@
 #include <stdlib.h>
 
 /* Function to create a new node with given value as data */
-Node* createNode(Game *game) {
+Node* createNode(Game *gameCopy) {
     Node* newNode = NULL;
     newNode = (Node*)malloc(sizeof(Node));
+
+    /* Check if allocation has been successful before proceeding */
     if (newNode != NULL) {
         /* Allocate and copy Player */
-        newNode->game = game;
+        newNode->game = gameCopy;
+
+        /* Check if gameCopy that was passed to the method is != NULL */
         if (newNode->game != NULL) {
-            *(newNode->game) = *game;
+            /* Copy the contents of the provided Game into the new one */
+            *(newNode->game) = *gameCopy;
             newNode->next = NULL;
             newNode->prev = NULL;
         } else {
@@ -48,15 +53,6 @@ void insertAtEnd(Node **head, Game *game) {
             temp->next = newNode;
             newNode->prev = temp;
         }
-
-        if (*head != NULL) {
-            printf("Game player position %d %d\n",
-                game->player.playerPosX,
-                game->player.playerPosY);
-            printf("Head player position %d %d\n",
-                (*head)->game->player.playerPosX,
-                (*head)->game->player.playerPosY);
-        }
     }
 }
 
@@ -64,7 +60,7 @@ void insertAtEnd(Node **head, Game *game) {
     If the list is empty (head == NULL), it returns NULL. 
 */
 Node* getAtEnd(Node* head) {
-    Node* temp = head;      /* gets pointer to the head of the chained list */
+    Node* temp = head;      /* Gets pointer to the head of the linked list */
 
     /* Move to the end of the list */
     while (temp != NULL && temp->next != NULL) {
@@ -78,62 +74,62 @@ Node* getAtEnd(Node* head) {
 Game* copyGame(const Game* original) {
     int i, j;
 
+    /* Check if memory could be allocated */
     Game* newGame = malloc(sizeof(Game));
-    if (newGame == NULL) {
-        fprintf(stderr, "Failed to allocate memory for Game\n");
-        return NULL;
-    }
+    if (newGame != NULL) {
+        /* Copy simple fields */
+        newGame->player = original->player;
+        newGame->map.rows = original->map.rows;
+        newGame->map.cols = original->map.cols;
+        newGame->map.trapTriggered = original->map.trapTriggered;
 
-    /* Copy simple fields */
-    newGame->player = original->player;
-    newGame->map.rows = original->map.rows;
-    newGame->map.cols = original->map.cols;
-    newGame->map.trapTriggered = original->map.trapTriggered;
-
-    /* Allocate mapGrid (array of row pointers) */
-    newGame->map.mapGrid = malloc(original->map.rows * sizeof(char*));
-    if (newGame->map.mapGrid == NULL) {
-        fprintf(stderr, "Failed to allocate memory for mapGrid\n");
-        free(newGame);
-        return NULL;
-    }
-
-    /* Allocate and copy each row */
-    for (i = 0; i < original->map.rows; i++) {
-        newGame->map.mapGrid[i] = malloc(original->map.cols * sizeof(char));
-        if (newGame->map.mapGrid[i] == NULL) {
-            fprintf(stderr, "Failed to allocate memory for map row %d\n", i);
-            /* Free any previously allocated rows */
-            for (j = 0; j < i; j++) {
-                free(newGame->map.mapGrid[j]);
+        /* Allocate mapGrid (array of row pointers) */
+        newGame->map.mapGrid = malloc(original->map.rows * sizeof(char*));
+        if (newGame->map.mapGrid != NULL) {
+            /* Allocate and copy each row */
+            for (i = 0; i < original->map.rows; i++) {
+                newGame->map.mapGrid[i] = malloc(original->map.cols * sizeof(char));
+                if (newGame->map.mapGrid[i] == NULL) {
+                    printf("Failed to allocate memory for map row %d\n", i);
+                    /* Free any previously allocated rows */
+                    for (j = 0; j < i; j++) {
+                        free(newGame->map.mapGrid[j]);
+                    }
+                    free(newGame->map.mapGrid);
+                    /* Free newGame and set NULL to prevent dangling pointer */
+                    free(newGame);
+                    newGame = NULL;
+                } else {
+                    for (j = 0; j < original->map.cols; j++) {
+                        newGame->map.mapGrid[i][j] = original->map.mapGrid[i][j];
+                    }
+                }
             }
-            free(newGame->map.mapGrid);
+        } else {
+            printf("Failed to allocate memory for mapGrid\n");
             free(newGame);
-            return NULL;
         }
-
-        for (j = 0; j < original->map.cols; j++) {
-            newGame->map.mapGrid[i][j] = original->map.mapGrid[i][j];
-        }
+    } else {
+        printf("Failed to allocate memory for Game\n");
     }
 
     return newGame;
 }
 
 /* Frees game copy that was not added to the list */
-void freeGameCopy(Game *game){
+void freeGameCopy(Game *gameCopy){
     int i;
     /* Free the 2D map grid */
-    if (game->map.mapGrid != NULL) {
-        for (i = 0; i < game->map.rows; i++) {
-            free(game->map.mapGrid[i]);  /* Free each row */
+    if (gameCopy->map.mapGrid != NULL) {
+        for (i = 0; i < gameCopy->map.rows; i++) {
+            free(gameCopy->map.mapGrid[i]);  /* Free each row */
         }
-        free(game->map.mapGrid);  /* Free the array of row pointers */
-        game->map.mapGrid = NULL;
+        free(gameCopy->map.mapGrid);  /* Free the array of row pointers */
+        gameCopy->map.mapGrid = NULL;
     }
 
     /* Free the game struct itself */
-    free(game);
+    free(gameCopy);
 }
 
 /* Frees the whole linked list after won or lose */
@@ -141,6 +137,7 @@ void freeLinkedList(Node **head) {
     Node *currentGame = *head;
     Node *next;
 
+    /* Keep going until end of list */
     while (currentGame != NULL) {
         next = currentGame->next;
 
@@ -154,28 +151,28 @@ void freeLinkedList(Node **head) {
     *head = NULL;  /* Prev dangling pointer */
 }
 
-/* ! Function to delete a node from the end */
+/* Function to delete a node from the end */
 void deleteAtEnd(Node **head) {           
     Node* temp;
-    if (*head == NULL) {
-        printf("The list is already empty.\n");
-        return;
-    }
+    /* Check if list is empty */
+    if (*head != NULL) {
+        /* Points to the first node */
+        temp = *head; 
+        /* If only one node, refuses to delete because this is initial game */
+        if (temp->next != NULL) {
+            /* Traverse to the last node */
+            while (temp->next != NULL) {
+                temp = temp->next;
+            }
 
-    temp = *head; /* Points to the first node */
-
-    /* If only one node, refuses to delete because this is initial game */
-    if (temp->next != NULL) {
-        /* Traverse to the last node */
-        while (temp->next != NULL) {
-            temp = temp->next;
+            freeGameCopy(temp->game);
+            temp->prev->next = NULL; /* Disconnects the last node from list */
+            free(temp); /*free note */
+        } else {
+            printf("Cannot undo the initial state.\n");
+            return;   
         }
-
-        freeGameCopy(temp->game);
-        temp->prev->next = NULL; /* Disconnects the last node from list */
-        free(temp); /*free note */
     } else {
-        printf("Cannot undo the initial state.\n");
-        return;   
+        printf("The list is already empty.\n");
     }
 }
