@@ -11,7 +11,7 @@ int main(int argc, char *argv[]) {
 
     /* Was exactly one argument provided? */
     if (argc != 2) {
-        printf("Not Accepted. You have to use './escape maps/map.txt'.\n");
+        printf("Not Accepted. You have to use './escape map.txt'.\n");
         mapLoad = FAILURE;
     } else {
         mapLoad = loadMap(game, argv[1]); /* if yes, then loadMap */

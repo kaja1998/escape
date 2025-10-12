@@ -2,13 +2,6 @@
   <img src="c.png" height="50px" style="display: inline-block; margin-left: auto; margin-right: auto;">
 </div>
 
-# Hints for programming (DELETE AT END)
-- Only ONE return for each function
-- No global vars
-- No exit();
-- No goto
-- Use header files (.h) with header guards
-
 # Escape
 
 ## About the Game
